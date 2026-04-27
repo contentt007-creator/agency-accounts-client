@@ -7,6 +7,7 @@ import Contacts from './pages/Contacts.jsx';
 import Accounts from './pages/Accounts.jsx';
 import Ledger from './pages/Ledger.jsx';
 import Loans from './pages/Loans.jsx';
+import Reports from './pages/Reports.jsx';
 
 const navItems = [
   { to: '/', icon: '📊', label: 'Dashboard', end: true },
@@ -17,6 +18,7 @@ const navItems = [
   { to: '/ledger', icon: '📒', label: 'Ledger' },
   { to: '/contacts', icon: '👥', label: 'Contacts' },
   { to: '/accounts', icon: '🏦', label: 'Chart of Accounts' },
+  { to: '/reports', icon: '📄', label: 'Reports' },
 ];
 
 const pageTitles = {
@@ -28,6 +30,7 @@ const pageTitles = {
   '/ledger': 'Ledger',
   '/contacts': 'Contacts',
   '/accounts': 'Chart of Accounts',
+  '/reports': 'Reports',
 };
 
 export default function App() {
@@ -71,6 +74,7 @@ export default function App() {
             <Route path="/ledger" element={<Ledger />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/accounts" element={<Accounts />} />
+            <Route path="/reports" element={<Reports />} />
           </Routes>
         </main>
       </div>
