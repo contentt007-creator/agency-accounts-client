@@ -53,6 +53,8 @@ export const bills = {
 
 export const dashboard = {
   summary: () => api.get('/dashboard/summary'),
+  monthly: () => api.get('/dashboard/monthly'),
+  topClients: () => api.get('/dashboard/top-clients'),
   agingReceivables: () => api.get('/dashboard/aging/receivables'),
   agingPayables: () => api.get('/dashboard/aging/payables'),
 };
