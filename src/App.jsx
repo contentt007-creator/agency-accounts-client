@@ -6,12 +6,14 @@ import Transactions from './pages/Transactions.jsx';
 import Contacts from './pages/Contacts.jsx';
 import Accounts from './pages/Accounts.jsx';
 import Ledger from './pages/Ledger.jsx';
+import Loans from './pages/Loans.jsx';
 
 const navItems = [
   { to: '/', icon: '📊', label: 'Dashboard', end: true },
   { to: '/invoices', icon: '🧾', label: 'Invoices' },
   { to: '/bills', icon: '📋', label: 'Bills (Payables)' },
   { to: '/transactions', icon: '↕️', label: 'Transactions' },
+  { to: '/loans', icon: '🤝', label: 'Loans Given' },
   { to: '/ledger', icon: '📒', label: 'Ledger' },
   { to: '/contacts', icon: '👥', label: 'Contacts' },
   { to: '/accounts', icon: '🏦', label: 'Chart of Accounts' },
@@ -22,6 +24,7 @@ const pageTitles = {
   '/invoices': 'Invoices',
   '/bills': 'Bills & Payables',
   '/transactions': 'Transactions',
+  '/loans': 'Loans Given',
   '/ledger': 'Ledger',
   '/contacts': 'Contacts',
   '/accounts': 'Chart of Accounts',
@@ -64,6 +67,7 @@ export default function App() {
             <Route path="/invoices" element={<Invoices />} />
             <Route path="/bills" element={<Bills />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/loans" element={<Loans />} />
             <Route path="/ledger" element={<Ledger />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/accounts" element={<Accounts />} />

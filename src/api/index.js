@@ -56,3 +56,12 @@ export const dashboard = {
   agingReceivables: () => api.get('/dashboard/aging/receivables'),
   agingPayables: () => api.get('/dashboard/aging/payables'),
 };
+
+export const loans = {
+  list: (params) => api.get('/loans', { params }),
+  get: (id) => api.get(`/loans/${id}`),
+  create: (data) => api.post('/loans', data),
+  update: (id, data) => api.put(`/loans/${id}`, data),
+  repayment: (id, data) => api.post(`/loans/${id}/repayment`, data),
+  writeOff: (id) => api.post(`/loans/${id}/write-off`),
+};

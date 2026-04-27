@@ -18,7 +18,7 @@ export default function Invoices() {
   const [showDetail, setShowDetail] = useState(null);
   const [showPayment, setShowPayment] = useState(null);
   const [form, setForm] = useState(EMPTY_FORM);
-  const [payment, setPayment] = useState({ amount: '', date: new Date().toISOString().slice(0, 10), reference: '', receivableAccountId: '', bankAccountId: '' });
+  const [payment, setPayment] = useState({ amount: '', date: new Date().toISOString().slice(0, 10), reference: '', receivableAccountId: '', bankAccountId: '', transferFee: '', feeAccountId: '' });
   const [saving, setSaving] = useState(false);
 
   const load = () => invoices.list(filter ? { status: filter } : {}).then((r) => setList(r.data));
@@ -80,14 +80,16 @@ export default function Invoices() {
 
   const openPayment = (inv) => {
     setShowPayment(inv);
-    setPayment({ amount: inv.amountDue, date: new Date().toISOString().slice(0, 10), reference: '', receivableAccountId: '', bankAccountId: '' });
+    setPayment({ amount: inv.amountDue, date: new Date().toISOString().slice(0, 10), reference: '', receivableAccountId: '', bankAccountId: '', transferFee: '', feeAccountId: '' });
   };
 
   const handlePayment = async () => {
     if (!payment.receivableAccountId || !payment.bankAccountId) return toast.error('Select accounts for the payment entry');
+    const fee = parseFloat(payment.transferFee) || 0;
+    if (fee > 0 && !payment.feeAccountId) return toast.error('Select a Bank Charges account for the transfer fee');
     setSaving(true);
     try {
-      await invoices.payment(showPayment._id, { ...payment, amount: parseFloat(payment.amount) });
+      await invoices.payment(showPayment._id, { ...payment, amount: parseFloat(payment.amount), transferFee: fee });
       toast.success('Payment recorded');
       setShowPayment(null);
       load();
@@ -361,6 +363,22 @@ export default function Invoices() {
                   <option value="">Select...</option>
                   {accountList.map((a) => <option key={a._id} value={a._id}>{a.code} — {a.name}</option>)}
                 </select>
+              </div>
+              <div style={{ background: '#f9fafb', border: '1px solid var(--border)', borderRadius: 6, padding: 12, marginTop: 4 }}>
+                <div style={{ fontSize: 12, fontWeight: 600, marginBottom: 10, color: 'var(--muted)' }}>BANK TRANSFER FEE (optional)</div>
+                <div className="form-row" style={{ marginBottom: 0 }}>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label>Fee Amount (৳)</label>
+                    <input type="number" min="0" placeholder="0" value={payment.transferFee} onChange={(e) => setPayment({ ...payment, transferFee: e.target.value })} />
+                  </div>
+                  <div className="form-group" style={{ marginBottom: 0 }}>
+                    <label>Charge to Account</label>
+                    <select value={payment.feeAccountId} onChange={(e) => setPayment({ ...payment, feeAccountId: e.target.value })}>
+                      <option value="">Select expense account...</option>
+                      {accountList.filter((a) => a.type === 'expense').map((a) => <option key={a._id} value={a._id}>{a.code} — {a.name}</option>)}
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="modal-footer">
