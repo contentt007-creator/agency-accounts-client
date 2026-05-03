@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { bills, contacts, accounts, fmt, fmtDate } from '../api/index.js';
+import { generateBillPDF } from '../utils/pdfGenerator.js';
 
 const EMPTY_LINE = { description: '', quantity: 1, unitPrice: '', amount: 0 };
 const EMPTY_FORM = {
@@ -298,6 +299,13 @@ export default function Bills() {
               {!['void', 'paid'].includes(showDetail.status) && (
                 <button className="btn btn-danger" onClick={() => handleVoid(showDetail._id)}>Void</button>
               )}
+              <button
+                className="btn btn-primary"
+                onClick={() => generateBillPDF(showDetail)}
+                style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+              >
+                ⬇ Download PDF
+              </button>
               <button className="btn btn-outline" onClick={() => setShowDetail(null)}>Close</button>
             </div>
           </div>

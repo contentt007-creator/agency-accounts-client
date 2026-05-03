@@ -41,8 +41,8 @@ export default function App() {
     <div className="layout">
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <h1>Agency Accounts</h1>
-          <p>Financial Management</p>
+          <h1>UmbrellaCorp HQ</h1>
+          <p>umbrellacorphq.com</p>
         </div>
         <nav className="sidebar-nav">
           <div className="nav-section">Menu</div>

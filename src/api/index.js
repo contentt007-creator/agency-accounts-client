@@ -2,6 +2,26 @@ import axios from 'axios';
 
 const api = axios.create({ baseURL: import.meta.env.VITE_API_URL || '/api' });
 
+// Attach stored JWT to every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('agency_jwt');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+export const auth = {
+  setup: (data) => api.post('/auth/setup', data),
+  login: (data) => api.post('/auth/login', data),
+  me: () => api.get('/auth/me'),
+  users: {
+    list: () => api.get('/auth/users'),
+    create: (data) => api.post('/auth/users', data),
+    update: (id, data) => api.put(`/auth/users/${id}`, data),
+    delete: (id) => api.delete(`/auth/users/${id}`),
+  },
+  changePassword: (data) => api.put('/auth/me/password', data),
+};
+
 // BDT formatter
 export const fmt = (n) =>
   new Intl.NumberFormat('en-BD', { style: 'currency', currency: 'BDT', minimumFractionDigits: 2 }).format(n || 0);
